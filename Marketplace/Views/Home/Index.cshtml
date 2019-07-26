@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Marketplace.Models.Item>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>MARKETPLACE</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ListPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Item" asp-action="Details" asp-route-id="@item.ItemId">
+                        @Html.DisplayFor(model => item.Title)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ListPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Category.Label)
+                    <a asp-controller="Items" asp-action="ItemCategoryDetails" asp-route-id="@item.CategoryId">(Details)</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
