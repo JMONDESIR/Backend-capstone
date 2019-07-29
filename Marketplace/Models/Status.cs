@@ -7,7 +7,7 @@ namespace Marketplace.Models
 {
     public class Status
     {
-        public int Id { get; set; }
+        public int StatusId { get; set; }
 
         public string ListStatus { get; set; }
     }

@@ -30,6 +30,23 @@ namespace Marketplace.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Category");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            Label = "Toys/Games"
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            Label = "Sporting Goods"
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            Label = "Miscellaneous"
+                        });
                 });
 
             modelBuilder.Entity("Marketplace.Models.Item", b =>
@@ -59,6 +76,38 @@ namespace Marketplace.Migrations
                     b.HasIndex("StatusId");
 
                     b.ToTable("Item");
+
+                    b.HasData(
+                        new
+                        {
+                            ItemId = 1,
+                            CategoryId = 3,
+                            Description = "1.75 liter bottle of Triple distilled Irish whiskey. Great for first time whiskey tasters.",
+                            ListPrice = 50.0,
+                            SellerId = "00000000-aaaa-bbbb-cccc-dddddddddddd",
+                            StatusId = 2,
+                            Title = "Jameson Irish Whiskey"
+                        },
+                        new
+                        {
+                            ItemId = 2,
+                            CategoryId = 1,
+                            Description = "The classic, fast-paced, wheelin' & dealin, property trading board game. I bought this back in 1990, now I'm passing it to you.",
+                            ListPrice = 150.0,
+                            SellerId = "00000000-aaaa-bbbb-cccc-dddddddddddd",
+                            StatusId = 1,
+                            Title = "Monopoly"
+                        },
+                        new
+                        {
+                            ItemId = 3,
+                            CategoryId = 2,
+                            Description = "A deluxe padded seat with adjustable backrest and adjustable foot pegs, this kayak is a great choice for touring lazy rivers or doing some exploration on smaller lakes. Must sell to make room in my garage.",
+                            ListPrice = 400.0,
+                            SellerId = "00000000-aaaa-bbbb-cccc-dddddddddddd",
+                            StatusId = 1,
+                            Title = "Perception Conduit 13.0 Kayak"
+                        });
                 });
 
             modelBuilder.Entity("Marketplace.Models.Messages", b =>
@@ -84,15 +133,32 @@ namespace Marketplace.Migrations
 
             modelBuilder.Entity("Marketplace.Models.Status", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("StatusId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ListStatus");
 
-                    b.HasKey("Id");
+                    b.HasKey("StatusId");
 
                     b.ToTable("Status");
+
+                    b.HasData(
+                        new
+                        {
+                            StatusId = 1,
+                            ListStatus = "Active"
+                        },
+                        new
+                        {
+                            StatusId = 2,
+                            ListStatus = "Inactive"
+                        },
+                        new
+                        {
+                            StatusId = 3,
+                            ListStatus = "Sold"
+                        });
                 });
 
             modelBuilder.Entity("Marketplace.Models.User", b =>
@@ -158,7 +224,7 @@ namespace Marketplace.Migrations
                         {
                             Id = "00000000-aaaa-bbbb-cccc-dddddddddddd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "68732885-c1b5-42cb-9777-d5a5cbeabbd0",
+                            ConcurrencyStamp = "a4c4f75b-8a9c-48e2-8f73-ce5a43b7d7e5",
                             Email = "jim@jimbean.com.com",
                             EmailConfirmed = true,
                             FirstName = "Jim",
@@ -166,7 +232,7 @@ namespace Marketplace.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "jim@jimbean.com",
                             NormalizedUserName = "jim@jimbean.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJrKLw2Ecrq2UU0Fv7WbBlHOKvjezeXrFnuD6v77aoj2QoPyn2jdp3yczRNubXH+Tw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEbFT+SM69Uz84xzz/nsWykdpNfQNtWB+0JBAdnTgSb2bnbBTEeUoQUmI7Qud3pC4g==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,
