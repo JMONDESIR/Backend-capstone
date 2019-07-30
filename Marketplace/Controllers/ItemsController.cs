@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Marketplace.Data;
 using Marketplace.Models;
 using Microsoft.AspNetCore.Identity;
+using Marketplace.Models.ItemViewModels;
 
 namespace Marketplace.Controllers
 {
@@ -59,10 +60,16 @@ namespace Marketplace.Controllers
         // GET: Items/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryId");
-            ViewData["SellerId"] = new SelectList(_context.User, "Id", "Id");
-            ViewData["StatusId"] = new SelectList(_context.Status, "StatusId", "StatusId");
-            return View();
+            var viewModel = new ItemCreateEditViewModel
+            {
+                AvailableCategory = _context.Category.ToList(),
+                AvailableStatus = _context.Status.ToList()
+            };
+            List<Category> avCat = getCategories();
+            List<Status> avStat = getStatus();
+            viewModel.AvailableCategory = avCat;
+            viewModel.AvailableStatus = avStat;
+            return View(viewModel);
         }
 
         // POST: Items/Create
@@ -87,20 +94,21 @@ namespace Marketplace.Controllers
         // GET: Items/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ItemCreateEditViewModel viewModel = new ItemCreateEditViewModel();
+            viewModel.AvailableCategory = _context.Category.ToList();
+            viewModel.AvailableStatus = _context.Status.ToList();
             if (id == null)
             {
                 return NotFound();
             }
 
-            var item = await _context.Item.FindAsync(id);
-            if (item == null)
+            Item taco = await _context.Item.FindAsync(id);
+            viewModel.Item = taco;
+            if (taco == null)
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryId", item.CategoryId);
-            ViewData["SellerId"] = new SelectList(_context.User, "Id", "Id", item.SellerId);
-            ViewData["StatusId"] = new SelectList(_context.Status, "StatusId", "StatusId", item.StatusId);
-            return View(item);
+            return View(viewModel);
         }
 
         // POST: Items/Edit/5
@@ -176,6 +184,22 @@ namespace Marketplace.Controllers
         private bool ItemExists(int id)
         {
             return _context.Item.Any(e => e.ItemId == id);
+        }
+
+        // Method used to get all categories from DB
+        private List<Category> getCategories()
+        {
+            var categories = _context.Category.ToList();
+    
+            return categories;
+        }
+
+        // Method for getting the status' from DB
+        private List<Status> getStatus()
+        {
+            var statusList = _context.Status.ToList();
+
+            return statusList;
         }
     }
 }
