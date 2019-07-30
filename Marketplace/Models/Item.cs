@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace Marketplace.Models
 
         public Category Category { get; set; }
 
+        [Display(Name = "Category")]
         public int CategoryId { get; set; }
 
         public User Seller { get; set; }
@@ -25,6 +27,7 @@ namespace Marketplace.Models
 
         public string Description { get; set; }
 
+        [Display(Name = "Price")]
         public double ListPrice { get; set; }
     }
 }
