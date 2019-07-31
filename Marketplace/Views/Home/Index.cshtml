@@ -27,5 +27,28 @@
         </tr>
     </thead>
 
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Item" asp-action="Details" asp-route-id="@item.ItemId">
+                        @Html.DisplayFor(model => item.Title)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ListPrice)
+                </td>
+                <td>
+                    <a asp-controller="Item" asp-action="Items.Details" asp-route-id="@item.CategoryId">
+                        @Html.DisplayFor(model => item.Category.Label)</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
 </table>
 

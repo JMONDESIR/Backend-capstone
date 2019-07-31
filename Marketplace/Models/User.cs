@@ -22,5 +22,6 @@ namespace Marketplace.Models
         [Display(Name = "User Name")]
         public string FullName => $"{FirstName} {LastName}";
         public string ImagePath { get; set; }
+        public virtual ICollection<Item> Item { get; set; }
     }
 }

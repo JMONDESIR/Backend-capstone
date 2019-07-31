@@ -21,15 +21,30 @@ namespace Marketplace.Controllers
         {
             _context = context;
             _userManager = userManager;
-
         }
         private Task<User> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
         // GET: Items
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var applicationDbContext = _context.Item.Include(i => i.Category).Include(i => i.Seller).Include(i => i.Status);
+            ViewData["CurrentFilter"] = searchString;
+
+            var applicationDbContext = _context.Item.Include(i => i.Category).Include(i => i.Seller);
 
             //If user enters a string into the search input field in the navbar - adding a where clause to include products whose name contains string.
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                applicationDbContext = _context.Item.Where(i => i.Title.Contains(searchString)).Include(i => i.Category).Include(i => i.Seller);
+            }
+
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> MyItems()
+        {
+            var currentUser = await GetCurrentUserAsync();
+            var applicationDbContext = _context.Item.Where(i => i.SellerId == currentUser.Id)
+                                                        .Include(i => i.Category)
+                                                        .Include(i => i.Seller);
 
             return View(await applicationDbContext.ToListAsync());
         }
