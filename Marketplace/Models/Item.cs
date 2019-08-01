@@ -27,6 +27,9 @@ namespace Marketplace.Models
 
         public string Description { get; set; }
 
+        [Required]
+        [Range(0.01, 10000)]
+        [DisplayFormat(DataFormatString = "{0:C}")]
         [Display(Name = "Price")]
         public double ListPrice { get; set; }
     }
