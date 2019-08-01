@@ -26,13 +26,12 @@
             <th></th>
         </tr>
     </thead>
-
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    <a asp-controller="Item" asp-action="Details" asp-route-id="@item.ItemId">
+                    <a asp-controller="Items" asp-action="BuyerDetails" asp-route-id="@item.ItemId">
                         @Html.DisplayFor(model => item.Title)
                     </a>
                 </td>

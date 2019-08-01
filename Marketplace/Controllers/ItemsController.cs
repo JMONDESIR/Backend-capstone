@@ -70,7 +70,26 @@ namespace Marketplace.Controllers
             return View(item);
         }
 
+        // GET: Items/BuyerDetails/5
+        public async Task<IActionResult> BuyerDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var item = await _context.Item
+                .Include(i => i.Category)
+                .Include(i => i.Seller)
+                .Include(i => i.Status)
+                .FirstOrDefaultAsync(m => m.ItemId == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return View(item);
+        }
 
         // GET: Items/Create
         public IActionResult Create()
@@ -92,18 +111,21 @@ namespace Marketplace.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ItemId,CategoryId,SellerId,StatusId,Title,Description,ListPrice")] Item item)
+        public async Task<IActionResult> Create(ItemCreateEditViewModel  viewModel)
         {
+            var Item = viewModel.Item;
+
             if (ModelState.IsValid)
             {
-                _context.Add(item);
+                var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                Item.SellerId = currentUser.Id;
+                _context.Add(Item);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryId", item.CategoryId);
-            ViewData["SellerId"] = new SelectList(_context.User, "Id", "Id", item.SellerId);
-            ViewData["StatusId"] = new SelectList(_context.Status, "StatusId", "StatusId", item.StatusId);
-            return View(item);
+
+            viewModel.AvailableCategory = await _context.Category.ToListAsync();
+            return View(viewModel);
         }
 
         // GET: Items/Edit/5
@@ -131,9 +153,11 @@ namespace Marketplace.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ItemId,CategoryId,SellerId,StatusId,Title,Description,ListPrice")] Item item)
+        public async Task<IActionResult> Edit(int id, Item Item)
         {
-            if (id != item.ItemId)
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            Item.SellerId = currentUser.Id;
+            if (id != Item.ItemId)
             {
                 return NotFound();
             }
@@ -142,12 +166,12 @@ namespace Marketplace.Controllers
             {
                 try
                 {
-                    _context.Update(item);
+                    _context.Update(Item);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.ItemId))
+                    if (!ItemExists(Item.ItemId))
                     {
                         return NotFound();
                     }
@@ -158,10 +182,8 @@ namespace Marketplace.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryId", item.CategoryId);
-            ViewData["SellerId"] = new SelectList(_context.User, "Id", "Id", item.SellerId);
-            ViewData["StatusId"] = new SelectList(_context.Status, "StatusId", "StatusId", item.StatusId);
-            return View(item);
+
+            return View(Item);
         }
 
         // GET: Items/Delete/5
