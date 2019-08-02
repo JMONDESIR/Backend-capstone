@@ -59,6 +59,8 @@ namespace Marketplace.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("ImagePath");
+
                     b.Property<double>("ListPrice");
 
                     b.Property<string>("SellerId");
@@ -224,7 +226,7 @@ namespace Marketplace.Migrations
                         {
                             Id = "00000000-aaaa-bbbb-cccc-dddddddddddd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a4c4f75b-8a9c-48e2-8f73-ce5a43b7d7e5",
+                            ConcurrencyStamp = "7b5f50a9-dc54-4dac-b6bf-8b8d9b47c424",
                             Email = "jim@jimbean.com.com",
                             EmailConfirmed = true,
                             FirstName = "Jim",
@@ -232,7 +234,7 @@ namespace Marketplace.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "jim@jimbean.com",
                             NormalizedUserName = "jim@jimbean.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEbFT+SM69Uz84xzz/nsWykdpNfQNtWB+0JBAdnTgSb2bnbBTEeUoQUmI7Qud3pC4g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJiEg3wQKIPcidv+j3YgJivM7h8rBjeDJ+Shywfjr9DFyqSR4HxcrySALpVk2UNn6w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,
@@ -362,7 +364,7 @@ namespace Marketplace.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Marketplace.Models.User", "Seller")
-                        .WithMany()
+                        .WithMany("Item")
                         .HasForeignKey("SellerId");
 
                     b.HasOne("Marketplace.Models.Status", "Status")

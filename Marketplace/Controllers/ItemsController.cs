@@ -9,6 +9,8 @@ using Marketplace.Data;
 using Marketplace.Models;
 using Microsoft.AspNetCore.Identity;
 using Marketplace.Models.ItemViewModels;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace Marketplace.Controllers
 {
@@ -16,11 +18,13 @@ namespace Marketplace.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly IHostingEnvironment hostingEnvironment;
 
-        public ItemsController(ApplicationDbContext context, UserManager<User> userManager)
+        public ItemsController(ApplicationDbContext context, UserManager<User> userManager, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
             _userManager = userManager;
+            this.hostingEnvironment = hostingEnvironment;
         }
         private Task<User> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
         // GET: Items by search
@@ -112,18 +116,37 @@ namespace Marketplace.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ItemCreateEditViewModel  viewModel)
         {
-            var Item = viewModel.Item;
 
             if (ModelState.IsValid)
             {
+                string uniqueFileName = null;
+
+                // If the Photo property on the incoming model object is not null, then the user
+                // has selected an image to upload.
+                if (viewModel.Photo != null)
+                {
+                    // The image must be uploaded to the images folder in wwwroot
+                    // To get the path of the wwwroot folder we are using the inject
+                    // HostingEnvironment service provided by ASP.NET Core
+                    string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+                    // To make sure the file name is unique we are appending a new
+                    // GUID value and and an underscore to the file name
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + viewModel.Photo.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    // Use CopyTo() method provided by IFormFile interface to
+                    // copy the file to wwwroot/images folder
+                    viewModel.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
+                var Item = viewModel.Item;
                 var currentUser = await _userManager.GetUserAsync(HttpContext.User);
                 Item.SellerId = currentUser.Id;
+                Item.ImagePath = uniqueFileName;
                 _context.Add(Item);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(MyItems));
             }
 
-            viewModel.AvailableCategory = await _context.Category.ToListAsync();
+                viewModel.AvailableCategory = await _context.Category.ToListAsync();
             return View(viewModel);
         }
 
