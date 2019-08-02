@@ -23,7 +23,7 @@ namespace Marketplace.Controllers
             _userManager = userManager;
         }
         private Task<User> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
-        // GET: Items
+        // GET: Items by search
         public async Task<IActionResult> Index(string searchString)
         {
             ViewData["CurrentFilter"] = searchString;
@@ -49,8 +49,8 @@ namespace Marketplace.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Items/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Items/BuyerDetails/5
+        public async Task<IActionResult> BuyerDetails(int? id)
         {
             if (id == null)
             {
@@ -70,8 +70,7 @@ namespace Marketplace.Controllers
             return View(item);
         }
 
-        // GET: Items/BuyerDetails/5
-        public async Task<IActionResult> BuyerDetails(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -121,7 +120,7 @@ namespace Marketplace.Controllers
                 Item.SellerId = currentUser.Id;
                 _context.Add(Item);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(MyItems));
             }
 
             viewModel.AvailableCategory = await _context.Category.ToListAsync();
@@ -180,7 +179,7 @@ namespace Marketplace.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(MyItems));
             }
 
             return View(Item);
@@ -215,7 +214,7 @@ namespace Marketplace.Controllers
             var item = await _context.Item.FindAsync(id);
             _context.Item.Remove(item);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(MyItems));
         }
 
         private bool ItemExists(int id)
