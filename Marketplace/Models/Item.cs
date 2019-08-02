@@ -21,6 +21,7 @@ namespace Marketplace.Models
 
         public Status Status { get; set; }
 
+        [Display(Name = "Status")]
         public int StatusId { get; set; }
 
         public string Title { get; set; }

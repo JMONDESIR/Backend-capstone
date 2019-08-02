@@ -4,7 +4,7 @@
     ViewData["Title"] = "MyItems";
 }
 
-<h1>MyItems</h1>
+<h1>My Items</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -14,12 +14,6 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Seller)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
@@ -37,13 +31,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Seller.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status.StatusId)
+                @Html.DisplayFor(modelItem => item.Category.Label)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
