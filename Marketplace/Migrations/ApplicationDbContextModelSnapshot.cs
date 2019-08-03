@@ -226,7 +226,7 @@ namespace Marketplace.Migrations
                         {
                             Id = "00000000-aaaa-bbbb-cccc-dddddddddddd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7b5f50a9-dc54-4dac-b6bf-8b8d9b47c424",
+                            ConcurrencyStamp = "1f49f519-25b1-4c1f-bc74-13778e788530",
                             Email = "jim@jimbean.com.com",
                             EmailConfirmed = true,
                             FirstName = "Jim",
@@ -234,7 +234,7 @@ namespace Marketplace.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "jim@jimbean.com",
                             NormalizedUserName = "jim@jimbean.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJiEg3wQKIPcidv+j3YgJivM7h8rBjeDJ+Shywfjr9DFyqSR4HxcrySALpVk2UNn6w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIiGwllX5wPoouRSvNsanzjyerQOhJ4NWRKC6eHfxjg4iMhE/zet2SEK5fkWxXCQ+A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,

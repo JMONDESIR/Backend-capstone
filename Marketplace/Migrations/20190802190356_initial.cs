@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Marketplace.Migrations
 {
-    public partial class INITIAL : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -249,7 +249,7 @@ namespace Marketplace.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "00000000-aaaa-bbbb-cccc-dddddddddddd", 0, "7b5f50a9-dc54-4dac-b6bf-8b8d9b47c424", "jim@jimbean.com.com", true, "Jim", null, "Bean", false, null, "jim@jimbean.com", "jim@jimbean.com", "AQAAAAEAACcQAAAAEJiEg3wQKIPcidv+j3YgJivM7h8rBjeDJ+Shywfjr9DFyqSR4HxcrySALpVk2UNn6w==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", false, "JimBean" });
+                values: new object[] { "00000000-aaaa-bbbb-cccc-dddddddddddd", 0, "1f49f519-25b1-4c1f-bc74-13778e788530", "jim@jimbean.com.com", true, "Jim", null, "Bean", false, null, "jim@jimbean.com", "jim@jimbean.com", "AQAAAAEAACcQAAAAEIiGwllX5wPoouRSvNsanzjyerQOhJ4NWRKC6eHfxjg4iMhE/zet2SEK5fkWxXCQ+A==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", false, "JimBean" });
 
             migrationBuilder.InsertData(
                 table: "Category",
