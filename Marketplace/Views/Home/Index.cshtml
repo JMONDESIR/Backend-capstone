@@ -2,52 +2,60 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<User> SignInManager
 
-@{
+
+        @{
     ViewData["Title"] = "Index";
-}
-
-<h1>Home</h1>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ListPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <a asp-controller="Items" asp-action="BuyerDetails" asp-route-id="@item.ItemId">
-                        @Html.DisplayFor(model => item.Title)
-                    </a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ListPrice)
-                </td>
-                <td>
-                    <a asp-controller="Item" asp-action="Items.Details" asp-route-id="@item.CategoryId">
-                        @Html.DisplayFor(model => item.Category.Label)</a>
-                </td>
-            </tr>
         }
-    </tbody>
 
-</table>
+        <h1>Home</h1>
 
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ImagePath)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ListPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Category)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+        {
+                <tr>
+                    <td>
+                        <a asp-controller="Items" asp-action="BuyerDetails" asp-route-id="@item.ItemId">
+                            @Html.DisplayFor(model => item.Title)
+                        </a>
+                    </td>
+                    <td>
+                        <img class="attract-home" src="~/images/@item.ImagePath"
+                             asp-append-version="true" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ListPrice)
+                    </td>
+                    <td>
+                        <a asp-controller="Item" asp-action="Items.Details" asp-route-id="@item.CategoryId">
+                            @Html.DisplayFor(model => item.Category.Label)
+                        </a>
+                    </td>
+                </tr>
+        }
+            </tbody>
+
+        </table>

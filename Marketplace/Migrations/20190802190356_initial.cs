@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Marketplace.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -220,7 +220,8 @@ namespace Marketplace.Migrations
                     StatusId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    ListPrice = table.Column<double>(nullable: false)
+                    ListPrice = table.Column<double>(nullable: false),
+                    ImagePath = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -248,7 +249,7 @@ namespace Marketplace.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "00000000-aaaa-bbbb-cccc-dddddddddddd", 0, "a4c4f75b-8a9c-48e2-8f73-ce5a43b7d7e5", "jim@jimbean.com.com", true, "Jim", null, "Bean", false, null, "jim@jimbean.com", "jim@jimbean.com", "AQAAAAEAACcQAAAAEEbFT+SM69Uz84xzz/nsWykdpNfQNtWB+0JBAdnTgSb2bnbBTEeUoQUmI7Qud3pC4g==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", false, "JimBean" });
+                values: new object[] { "00000000-aaaa-bbbb-cccc-dddddddddddd", 0, "1f49f519-25b1-4c1f-bc74-13778e788530", "jim@jimbean.com.com", true, "Jim", null, "Bean", false, null, "jim@jimbean.com", "jim@jimbean.com", "AQAAAAEAACcQAAAAEIiGwllX5wPoouRSvNsanzjyerQOhJ4NWRKC6eHfxjg4iMhE/zet2SEK5fkWxXCQ+A==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", false, "JimBean" });
 
             migrationBuilder.InsertData(
                 table: "Category",
@@ -272,18 +273,18 @@ namespace Marketplace.Migrations
 
             migrationBuilder.InsertData(
                 table: "Item",
-                columns: new[] { "ItemId", "CategoryId", "Description", "ListPrice", "SellerId", "StatusId", "Title" },
-                values: new object[] { 1, 3, "1.75 liter bottle of Triple distilled Irish whiskey. Great for first time whiskey tasters.", 50.0, "00000000-aaaa-bbbb-cccc-dddddddddddd", 2, "Jameson Irish Whiskey" });
+                columns: new[] { "ItemId", "CategoryId", "Description", "ImagePath", "ListPrice", "SellerId", "StatusId", "Title" },
+                values: new object[] { 1, 3, "1.75 liter bottle of Triple distilled Irish whiskey. Great for first time whiskey tasters.", null, 50.0, "00000000-aaaa-bbbb-cccc-dddddddddddd", 2, "Jameson Irish Whiskey" });
 
             migrationBuilder.InsertData(
                 table: "Item",
-                columns: new[] { "ItemId", "CategoryId", "Description", "ListPrice", "SellerId", "StatusId", "Title" },
-                values: new object[] { 2, 1, "The classic, fast-paced, wheelin' & dealin, property trading board game. I bought this back in 1990, now I'm passing it to you.", 150.0, "00000000-aaaa-bbbb-cccc-dddddddddddd", 1, "Monopoly" });
+                columns: new[] { "ItemId", "CategoryId", "Description", "ImagePath", "ListPrice", "SellerId", "StatusId", "Title" },
+                values: new object[] { 2, 1, "The classic, fast-paced, wheelin' & dealin, property trading board game. I bought this back in 1990, now I'm passing it to you.", null, 150.0, "00000000-aaaa-bbbb-cccc-dddddddddddd", 1, "Monopoly" });
 
             migrationBuilder.InsertData(
                 table: "Item",
-                columns: new[] { "ItemId", "CategoryId", "Description", "ListPrice", "SellerId", "StatusId", "Title" },
-                values: new object[] { 3, 2, "A deluxe padded seat with adjustable backrest and adjustable foot pegs, this kayak is a great choice for touring lazy rivers or doing some exploration on smaller lakes. Must sell to make room in my garage.", 400.0, "00000000-aaaa-bbbb-cccc-dddddddddddd", 1, "Perception Conduit 13.0 Kayak" });
+                columns: new[] { "ItemId", "CategoryId", "Description", "ImagePath", "ListPrice", "SellerId", "StatusId", "Title" },
+                values: new object[] { 3, 2, "A deluxe padded seat with adjustable backrest and adjustable foot pegs, this kayak is a great choice for touring lazy rivers or doing some exploration on smaller lakes. Must sell to make room in my garage.", null, 400.0, "00000000-aaaa-bbbb-cccc-dddddddddddd", 1, "Perception Conduit 13.0 Kayak" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

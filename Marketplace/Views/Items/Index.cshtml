@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>MY MARKEY</h1>
+<h1>My Market</h1>
 
 <p>
     <a asp-action="Create">Add Item</a>
@@ -26,6 +26,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
+    var photoPath = "~/images/" + (item.ImagePath ?? "noimage.jpg");
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
@@ -35,6 +36,10 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ListPrice)
+            </td>
+            <td>
+                <img class="card-img-top imageThumbnail" src="@item.ImagePath"
+                     asp-append-version="true" />
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ItemId">Edit</a> |

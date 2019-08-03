@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Marketplace.Models.ItemViewModels
         public Item Item { get; set; }
         public List<Status> AvailableStatus { get; set; }
         public List<Category> AvailableCategory { get; set; }
-
+        public IFormFile Photo { get; set; }
         public List<SelectListItem> CategoryOptions
         {
             get

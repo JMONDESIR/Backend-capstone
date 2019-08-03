@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marketplace.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190729190911_Initial")]
-    partial class Initial
+    [Migration("20190802190356_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,6 +60,8 @@ namespace Marketplace.Migrations
                     b.Property<int>("CategoryId");
 
                     b.Property<string>("Description");
+
+                    b.Property<string>("ImagePath");
 
                     b.Property<double>("ListPrice");
 
@@ -226,7 +228,7 @@ namespace Marketplace.Migrations
                         {
                             Id = "00000000-aaaa-bbbb-cccc-dddddddddddd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a4c4f75b-8a9c-48e2-8f73-ce5a43b7d7e5",
+                            ConcurrencyStamp = "1f49f519-25b1-4c1f-bc74-13778e788530",
                             Email = "jim@jimbean.com.com",
                             EmailConfirmed = true,
                             FirstName = "Jim",
@@ -234,7 +236,7 @@ namespace Marketplace.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "jim@jimbean.com",
                             NormalizedUserName = "jim@jimbean.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEbFT+SM69Uz84xzz/nsWykdpNfQNtWB+0JBAdnTgSb2bnbBTEeUoQUmI7Qud3pC4g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIiGwllX5wPoouRSvNsanzjyerQOhJ4NWRKC6eHfxjg4iMhE/zet2SEK5fkWxXCQ+A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,
@@ -364,7 +366,7 @@ namespace Marketplace.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Marketplace.Models.User", "Seller")
-                        .WithMany()
+                        .WithMany("Item")
                         .HasForeignKey("SellerId");
 
                     b.HasOne("Marketplace.Models.Status", "Status")

@@ -33,5 +33,7 @@ namespace Marketplace.Models
         [DisplayFormat(DataFormatString = "{0:C}")]
         [Display(Name = "Price")]
         public double ListPrice { get; set; }
+
+        public string ImagePath { get; set; }
     }
 }

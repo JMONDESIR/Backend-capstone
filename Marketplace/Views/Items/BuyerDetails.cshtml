@@ -14,7 +14,8 @@
             @Html.DisplayNameFor(model => model.Title)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Title)
+            <img class="attract-demo" src="~/images/model.ImagePath"
+                 asp-append-version="true" />
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Category)
@@ -24,6 +25,7 @@
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Seller)
+        </dt>
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Seller.FullName)
@@ -43,5 +45,5 @@
     </dl>
 </div>
 <div>
-    <a asp-controller="Home" asp-action="Index">Back</a>
+    <a asp-controller="Home" asp-action="Index">Back</a> |
 </div>
