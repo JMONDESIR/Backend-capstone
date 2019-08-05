@@ -9,6 +9,12 @@
 
         <h1>Home</h1>
 
+        <form asp-controller="Products" asp-action="Index" method="get">
+            <input type="text" placeholder="Search For..." name="searchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-sm btn-primary" />
+        </form>
+        <br />
+
         <table class="table">
             <thead>
                 <tr>

@@ -10,7 +10,10 @@ namespace Marketplace.Models
 {
     public class User : IdentityUser
     {
-        public User (){}
+        public User ()
+        {
+            Messages = new HashSet<Message>();
+        }
 
         [Required]
         [Display(Name = "First Name")]
@@ -26,5 +29,7 @@ namespace Marketplace.Models
 
         public string ImagePath { get; set; }
         public virtual ICollection<Item> Item { get; set; }
+
+        public virtual ICollection<Message> Messages { get; set; }
     }
 }

@@ -32,6 +32,21 @@ namespace Marketplace.Controllers
         {
             ViewData["CurrentFilter"] = searchString;
 
+            var currentUser = GetCurrentUserAsync().Result;
+            List<Item> items = _context.Item
+                .Include(i => i.Category)
+                .Include(i => i.Seller)
+                .Include(i => i.Status)
+                .Where(i => i.Status.ListStatus == "Active")
+                .ToList();
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                items = items.Where(i => i.Category.Label.ToUpper().Contains(searchString.ToUpper())
+                || i.Status.ListStatus.ToUpper().Contains(searchString.ToUpper())).ToList();
+            }
+            
             var applicationDbContext = _context.Item.Include(i => i.Category).Include(i => i.Seller);
 
             //If user enters a string into the search input field in the navbar - adding a where clause to include products whose name contains string.
