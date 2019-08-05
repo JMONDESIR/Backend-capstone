@@ -112,23 +112,25 @@ namespace Marketplace.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Marketplace.Models.Messages", b =>
+            modelBuilder.Entity("Marketplace.Models.Message", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("RecieverId");
+                    b.Property<string>("Text")
+                        .IsRequired();
 
-                    b.Property<string>("SenderId");
+                    b.Property<string>("UserId");
 
-                    b.Property<string>("Text");
+                    b.Property<string>("UserName")
+                        .IsRequired();
+
+                    b.Property<DateTime>("When");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RecieverId");
-
-                    b.HasIndex("SenderId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Messages");
                 });
@@ -226,7 +228,7 @@ namespace Marketplace.Migrations
                         {
                             Id = "00000000-aaaa-bbbb-cccc-dddddddddddd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1f49f519-25b1-4c1f-bc74-13778e788530",
+                            ConcurrencyStamp = "5c2efaff-79cc-4673-ba88-5b67de33bde3",
                             Email = "jim@jimbean.com.com",
                             EmailConfirmed = true,
                             FirstName = "Jim",
@@ -234,7 +236,7 @@ namespace Marketplace.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "jim@jimbean.com",
                             NormalizedUserName = "jim@jimbean.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIiGwllX5wPoouRSvNsanzjyerQOhJ4NWRKC6eHfxjg4iMhE/zet2SEK5fkWxXCQ+A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL1eTka9mFf5wW4pH9dXZ/Yo5EzmgTd5s4TeKtrwm24xKPj5/oKVuiUUebLF2bJpug==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,
@@ -373,15 +375,11 @@ namespace Marketplace.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Marketplace.Models.Messages", b =>
+            modelBuilder.Entity("Marketplace.Models.Message", b =>
                 {
-                    b.HasOne("Marketplace.Models.User", "Reciever")
-                        .WithMany()
-                        .HasForeignKey("RecieverId");
-
                     b.HasOne("Marketplace.Models.User", "Sender")
-                        .WithMany()
-                        .HasForeignKey("SenderId");
+                        .WithMany("Messages")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

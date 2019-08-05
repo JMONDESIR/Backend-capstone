@@ -15,14 +15,20 @@ namespace Marketplace.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         public DbSet<Category> Category { get; set; }
         public DbSet<Item> Item { get; set; }
-        public DbSet<Messages> Messages { get; set; }
+        public DbSet<Message> Messages { get; set; }
         public DbSet<Status> Status { get; set; }
         public DbSet<User> User { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Helps with the navigation between object of the two classes
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Message>()
+                .HasOne<User>(a => a.Sender)
+                .WithMany(d => d.Messages)
+                .HasForeignKey(d => d.UserId);
+
 
             User User = new User
             {

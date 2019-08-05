@@ -32,11 +32,28 @@ namespace Marketplace.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+            ViewBag.CurrentUserName = currentUser.UserName;
+            var messages = await _context.Messages.ToListAsync();
             var applicationDbContext = _context.Item
                .Include(i => i.Category)
                .Include(i => i.Seller)
                .Take(5);
             return View(await applicationDbContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> Create(Message message)
+        {
+            if (ModelState.IsValid)
+            {
+                message.UserName = User.Identity.Name;
+                var sender = await _userManager.GetUserAsync(User);
+                message.UserId = sender.Id;
+                await _context.Messages.AddAsync(message);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            return Error();
         }
 
         public IActionResult Privacy()

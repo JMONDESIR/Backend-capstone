@@ -188,22 +188,17 @@ namespace Marketplace.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    SenderId = table.Column<string>(nullable: true),
-                    RecieverId = table.Column<string>(nullable: true),
-                    Text = table.Column<string>(nullable: true)
+                    UserName = table.Column<string>(nullable: false),
+                    Text = table.Column<string>(nullable: false),
+                    When = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Messages_AspNetUsers_RecieverId",
-                        column: x => x.RecieverId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Messages_AspNetUsers_SenderId",
-                        column: x => x.SenderId,
+                        name: "FK_Messages_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -249,7 +244,7 @@ namespace Marketplace.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "00000000-aaaa-bbbb-cccc-dddddddddddd", 0, "1f49f519-25b1-4c1f-bc74-13778e788530", "jim@jimbean.com.com", true, "Jim", null, "Bean", false, null, "jim@jimbean.com", "jim@jimbean.com", "AQAAAAEAACcQAAAAEIiGwllX5wPoouRSvNsanzjyerQOhJ4NWRKC6eHfxjg4iMhE/zet2SEK5fkWxXCQ+A==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", false, "JimBean" });
+                values: new object[] { "00000000-aaaa-bbbb-cccc-dddddddddddd", 0, "5c2efaff-79cc-4673-ba88-5b67de33bde3", "jim@jimbean.com.com", true, "Jim", null, "Bean", false, null, "jim@jimbean.com", "jim@jimbean.com", "AQAAAAEAACcQAAAAEL1eTka9mFf5wW4pH9dXZ/Yo5EzmgTd5s4TeKtrwm24xKPj5/oKVuiUUebLF2bJpug==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", false, "JimBean" });
 
             migrationBuilder.InsertData(
                 table: "Category",
@@ -341,14 +336,9 @@ namespace Marketplace.Migrations
                 column: "StatusId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_RecieverId",
+                name: "IX_Messages_UserId",
                 table: "Messages",
-                column: "RecieverId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Messages_SenderId",
-                table: "Messages",
-                column: "SenderId");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
