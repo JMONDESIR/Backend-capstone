@@ -24,11 +24,14 @@ namespace Marketplace.Controllers
         }
         private Task<User> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-        // GET: Bids
-        public async Task<IActionResult> BuyerIndex()
+        // GET: Bids by current user
+        public async Task<IActionResult> BuyerBidIndex()
         {
-            var applicationDbContext = _context.Bid.Include(b => b.Item);
-            return View(await applicationDbContext.ToListAsync());
+            var currentUser = await GetCurrentUserAsync();
+            var userBids = _context.Bid.Include(i => i.Item).Where(b => b.UserId == currentUser.Id);
+
+
+            return View(await userBids.ToListAsync());
         }
 
         // GET: Bids/Details/5
@@ -69,7 +72,6 @@ namespace Marketplace.Controllers
             bidItemview.Bid = new Bid();
             bidItemview.User = currentUser;
 
-            //   ViewData["ItemId"] = new SelectList(_context.Item, "ItemId", "ItemId");
             return View(bidItemview);
         }
 
@@ -88,7 +90,7 @@ namespace Marketplace.Controllers
                 bidItemView.Bid.ItemId = bidItemView.Item.ItemId;
                 _context.Add(bidItemView.Bid);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(BuyerIndex));
+                return RedirectToAction(nameof(BuyerBidIndex));
             }
 
             // ViewData["ItemId"] = new SelectList(_context.Item, "ItemId", "ItemId", bid.ItemId);
@@ -117,18 +119,22 @@ namespace Marketplace.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BidId,ItemId,UserId,Offer,Text,When")] Bid bid)
+        public async Task<IActionResult> Edit(int id, Bid bid)
         {
             if (id != bid.BidId)
             {
                 return NotFound();
             }
+            var BidToUpdate = await _context.Bid.FindAsync(id);
+            BidToUpdate.When = bid.When;
+            BidToUpdate.Offer = bid.Offer;
+            BidToUpdate.Comment = bid.Comment;
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(bid);
+                    _context.Update(BidToUpdate);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -142,7 +148,7 @@ namespace Marketplace.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(BuyerIndex));
+                return RedirectToAction(nameof(BuyerBidIndex));
             }
             ViewData["ItemId"] = new SelectList(_context.Item, "ItemId", "ItemId", bid.ItemId);
             return View(bid);
@@ -175,7 +181,7 @@ namespace Marketplace.Controllers
             var bid = await _context.Bid.FindAsync(id);
             _context.Bid.Remove(bid);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(BuyerIndex));
+            return RedirectToAction(nameof(BuyerBidIndex));
         }
 
         private bool BidExists(int id)

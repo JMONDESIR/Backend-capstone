@@ -13,9 +13,6 @@
                 @Html.DisplayNameFor(model => model.Item)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Offer)
             </th>
             <th>
@@ -32,10 +29,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Item.ItemId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserId)
+                    @Html.DisplayFor(modelItem => item.Item.Title)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Offer)
@@ -48,13 +42,15 @@
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.BidId">Edit my bid</a> |
-                    <a asp-action="Details" asp-route-id="@item.BidId">My bid Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.BidId">Delete my bid</a>
                 </td>
             </tr>
         }
+
     </tbody>
 </table>
+<hr />
+
 <div>
     <a asp-controller="Home" asp-action="Index">Home</a> |
 
