@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -34,6 +35,9 @@ namespace Marketplace.Models
         [Display(Name = "Price")]
         public double ListPrice { get; set; }
 
+        [Display(Name = "Image")]
         public string ImagePath { get; set; }
+
+        public virtual ICollection<Bid> Bids { get; set; }
     }
 }

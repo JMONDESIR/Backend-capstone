@@ -4,14 +4,16 @@ using Marketplace.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Marketplace.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190806181621_second")]
+    partial class second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -221,7 +223,7 @@ namespace Marketplace.Migrations
                         {
                             Id = "00000000-aaaa-bbbb-cccc-dddddddddddd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c40d4644-42cf-4952-9b32-f3b9cb48c299",
+                            ConcurrencyStamp = "cd899c94-dc7a-4747-bc55-85d1462d99c5",
                             Email = "jim@jimbean.com.com",
                             EmailConfirmed = true,
                             FirstName = "Jim",
@@ -229,7 +231,7 @@ namespace Marketplace.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "jim@jimbean.com",
                             NormalizedUserName = "jim@jimbean.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKFSWEeneg1UzNtEy3Y1ZvhzCf2PQ8q+JkMjNugY8TPfEehuMPjbriySN2d8hcWhVQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKNyhG231CHfidAnDdt2eIbPZNolPF4Y0wq0DBOkHWP1kRs6kK5+40EI5tRxqPiGmw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,
@@ -239,7 +241,7 @@ namespace Marketplace.Migrations
                         {
                             Id = "11111111-aaaa-bbbb-cccc-dddddddddddd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9a2eb110-29e6-4837-8a62-4d256b1f1612",
+                            ConcurrencyStamp = "57ff52c8-972d-44ec-8431-77244f1c0d25",
                             Email = "jack@jackdaniels.com.com",
                             EmailConfirmed = true,
                             FirstName = "Jack",
@@ -247,7 +249,7 @@ namespace Marketplace.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "jack@jackdaniels.com",
                             NormalizedUserName = "jack@jackdaniels.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAED0W3oPYQo5k1q78vsxZUtDwkQ8ZtM6P3ef39I2ceuvKQdFAGK5XKVFBpFS/CPFE2Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDhVkvn5wKBBVGKiJGrhr6XCaU357g1eSy2Zy9ys+tymBlX5/U9l5dBumqUSdZ9I5Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794578",
                             TwoFactorEnabled = false,

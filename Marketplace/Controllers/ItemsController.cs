@@ -80,6 +80,7 @@ namespace Marketplace.Controllers
                 .Include(i => i.Category)
                 .Include(i => i.Seller)
                 .Include(i => i.Status)
+                .Include(i => i.Bids)
                 .FirstOrDefaultAsync(m => m.ItemId == id);
             if (item == null)
             {
@@ -132,6 +133,7 @@ namespace Marketplace.Controllers
         public async Task<IActionResult> Create(ItemCreateEditViewModel  viewModel)
         {
 
+            var Item = viewModel.Item;
             if (ModelState.IsValid)
             {
                 string uniqueFileName = null;
@@ -151,11 +153,10 @@ namespace Marketplace.Controllers
                     // Use CopyTo() method provided by IFormFile interface to
                     // copy the file to wwwroot/images folder
                     viewModel.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                    Item.ImagePath = uniqueFileName;
                 }
-                var Item = viewModel.Item;
                 var currentUser = await _userManager.GetUserAsync(HttpContext.User);
                 Item.SellerId = currentUser.Id;
-                Item.ImagePath = uniqueFileName;
                 _context.Add(Item);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(MyItems));
@@ -171,6 +172,8 @@ namespace Marketplace.Controllers
             ItemCreateEditViewModel viewModel = new ItemCreateEditViewModel();
             viewModel.AvailableCategory = _context.Category.ToList();
             viewModel.AvailableStatus = _context.Status.ToList();
+            var Item = viewModel.Item;
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
             if (id == null)
             {
                 return NotFound();
@@ -190,37 +193,47 @@ namespace Marketplace.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Item Item)
+        public async Task<IActionResult> Edit(int id, ItemCreateEditViewModel viewModel)
         {
-            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
-            Item.SellerId = currentUser.Id;
-            if (id != Item.ItemId)
-            {
-                return NotFound();
-            }
-
+            var item = viewModel.Item;
             if (ModelState.IsValid)
             {
-                try
+                string uniqueFileName = null;
+
+                // If the Photo property on the incoming model object is not null, then the user
+                // has selected an image to upload.
+                if (viewModel.Photo != null)
                 {
-                    _context.Update(Item);
-                    await _context.SaveChangesAsync();
+                    // The image must be uploaded to the images folder in wwwroot
+                    // To get the path of the wwwroot folder we are using the inject
+                    // HostingEnvironment service provided by ASP.NET Core
+                    string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+                    // To make sure the file name is unique we are appending a new
+                    // GUID value and and an underscore to the file name
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + viewModel.Photo.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    // Use CopyTo() method provided by IFormFile interface to
+                    // copy the file to wwwroot/images folder
+                    viewModel.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                    viewModel.ImagePath = uniqueFileName;
                 }
-                catch (DbUpdateConcurrencyException)
+                if (uniqueFileName == null)
                 {
-                    if (!ItemExists(Item.ItemId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    item.ImagePath = viewModel.ImagePath;
                 }
+                else
+                {
+                    item.ImagePath = uniqueFileName;
+                }
+                var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                viewModel.UserId = currentUser.Id;
+                _context.Update(item);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(MyItems));
             }
 
-            return View(Item);
+            viewModel.AvailableCategory = getCategories();
+            return View(viewModel);
         }
 
         // GET: Items/Delete/5
@@ -259,6 +272,7 @@ namespace Marketplace.Controllers
         {
             return _context.Item.Any(e => e.ItemId == id);
         }
+
 
         // Method used to get all categories from DB
         private List<Category> getCategories()
