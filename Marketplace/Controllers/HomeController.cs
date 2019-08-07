@@ -16,7 +16,6 @@ namespace Marketplace.Controllers
     {
         //setting private reference to the I.D.F usermanager
         private readonly UserManager<User> _userManager;
-
         private readonly ApplicationDbContext _context;
 
         //Getting the current user that is logged in
@@ -33,8 +32,10 @@ namespace Marketplace.Controllers
         public async Task<IActionResult> Index()
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            ViewBag.CurrentUserName = currentUser.UserName;
-            var messages = await _context.Messages.ToListAsync();
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.CurrentUserName = currentUser.UserName;
+            }
             var applicationDbContext = _context.Item
                .Include(i => i.Category)
                .Include(i => i.Seller)
@@ -42,19 +43,6 @@ namespace Marketplace.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        public async Task<IActionResult> Create(Message message)
-        {
-            if (ModelState.IsValid)
-            {
-                message.UserName = User.Identity.Name;
-                var sender = await _userManager.GetUserAsync(User);
-                message.UserId = sender.Id;
-                await _context.Messages.AddAsync(message);
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
-            return Error();
-        }
 
         public IActionResult Privacy()
         {

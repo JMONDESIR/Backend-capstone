@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Marketplace.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190805011534_initial")]
+    [Migration("20190806140912_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,42 @@ namespace Marketplace.Migrations
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Marketplace.Models.Bid", b =>
+                {
+                    b.Property<int>("BidId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comment");
+
+                    b.Property<int>("ItemId");
+
+                    b.Property<double>("Offer");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<DateTime>("When");
+
+                    b.HasKey("BidId");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Bid");
+
+                    b.HasData(
+                        new
+                        {
+                            BidId = 1,
+                            Comment = "I've been looking for one of these! Can we bargain?",
+                            ItemId = 1,
+                            Offer = 420.0,
+                            UserId = "11111111-aaaa-bbbb-cccc-dddddddddddd",
+                            When = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
 
             modelBuilder.Entity("Marketplace.Models.Category", b =>
                 {
@@ -85,56 +121,13 @@ namespace Marketplace.Migrations
                         new
                         {
                             ItemId = 1,
-                            CategoryId = 3,
-                            Description = "1.75 liter bottle of Triple distilled Irish whiskey. Great for first time whiskey tasters.",
-                            ListPrice = 50.0,
-                            SellerId = "00000000-aaaa-bbbb-cccc-dddddddddddd",
-                            StatusId = 2,
-                            Title = "Jameson Irish Whiskey"
-                        },
-                        new
-                        {
-                            ItemId = 2,
                             CategoryId = 1,
-                            Description = "The classic, fast-paced, wheelin' & dealin, property trading board game. I bought this back in 1990, now I'm passing it to you.",
-                            ListPrice = 150.0,
+                            Description = "Classic Game with real gold and silver pieces.  1 of only 50 ever made.",
+                            ListPrice = 500.0,
                             SellerId = "00000000-aaaa-bbbb-cccc-dddddddddddd",
                             StatusId = 1,
-                            Title = "Monopoly"
-                        },
-                        new
-                        {
-                            ItemId = 3,
-                            CategoryId = 2,
-                            Description = "A deluxe padded seat with adjustable backrest and adjustable foot pegs, this kayak is a great choice for touring lazy rivers or doing some exploration on smaller lakes. Must sell to make room in my garage.",
-                            ListPrice = 400.0,
-                            SellerId = "00000000-aaaa-bbbb-cccc-dddddddddddd",
-                            StatusId = 1,
-                            Title = "Perception Conduit 13.0 Kayak"
+                            Title = "Monopoly Gold Edition"
                         });
-                });
-
-            modelBuilder.Entity("Marketplace.Models.Message", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Text")
-                        .IsRequired();
-
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("UserName")
-                        .IsRequired();
-
-                    b.Property<DateTime>("When");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Marketplace.Models.Status", b =>
@@ -230,7 +223,7 @@ namespace Marketplace.Migrations
                         {
                             Id = "00000000-aaaa-bbbb-cccc-dddddddddddd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5c2efaff-79cc-4673-ba88-5b67de33bde3",
+                            ConcurrencyStamp = "130593e2-8b02-4f14-a7ea-e02da967fa7f",
                             Email = "jim@jimbean.com.com",
                             EmailConfirmed = true,
                             FirstName = "Jim",
@@ -238,11 +231,29 @@ namespace Marketplace.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "jim@jimbean.com",
                             NormalizedUserName = "jim@jimbean.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEL1eTka9mFf5wW4pH9dXZ/Yo5EzmgTd5s4TeKtrwm24xKPj5/oKVuiUUebLF2bJpug==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMfXKsuvAureA7GV/K+ReMIqk4tPGMEkqXrCjPKOLxvBSOAiF3gd8EgzJ9sda1FMEg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             TwoFactorEnabled = false,
-                            UserName = "JimBean"
+                            UserName = "JimB"
+                        },
+                        new
+                        {
+                            Id = "11111111-aaaa-bbbb-cccc-dddddddddddd",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ce5bef93-1622-4ce8-a812-aa2e0eab2c1c",
+                            Email = "jack@jackdaniels.com.com",
+                            EmailConfirmed = true,
+                            FirstName = "Jack",
+                            LastName = "Daniels",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "jack@jackdaniels.com",
+                            NormalizedUserName = "jack@jackdaniels.com",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEIGIspccsCnW3Mbt9z+j6RnQ3SlZemj2q6bbqE2+AcL810Ujzfs7uXud0WlFkUE/Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794578",
+                            TwoFactorEnabled = false,
+                            UserName = "jackD"
                         });
                 });
 
@@ -360,6 +371,18 @@ namespace Marketplace.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Marketplace.Models.Bid", b =>
+                {
+                    b.HasOne("Marketplace.Models.Item", "Item")
+                        .WithMany("Bids")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Marketplace.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("Marketplace.Models.Item", b =>
                 {
                     b.HasOne("Marketplace.Models.Category", "Category")
@@ -375,13 +398,6 @@ namespace Marketplace.Migrations
                         .WithMany()
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Marketplace.Models.Message", b =>
-                {
-                    b.HasOne("Marketplace.Models.User", "Sender")
-                        .WithMany("Messages")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

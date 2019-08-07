@@ -183,28 +183,6 @@ namespace Marketplace.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Messages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserName = table.Column<string>(nullable: false),
-                    Text = table.Column<string>(nullable: false),
-                    When = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Messages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Messages_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Item",
                 columns: table => new
                 {
@@ -241,10 +219,43 @@ namespace Marketplace.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Bid",
+                columns: table => new
+                {
+                    BidId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ItemId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    Offer = table.Column<double>(nullable: false),
+                    Comment = table.Column<string>(nullable: true),
+                    When = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bid", x => x.BidId);
+                    table.ForeignKey(
+                        name: "FK_Bid_Item_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Item",
+                        principalColumn: "ItemId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bid_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "ImagePath", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "00000000-aaaa-bbbb-cccc-dddddddddddd", 0, "5c2efaff-79cc-4673-ba88-5b67de33bde3", "jim@jimbean.com.com", true, "Jim", null, "Bean", false, null, "jim@jimbean.com", "jim@jimbean.com", "AQAAAAEAACcQAAAAEL1eTka9mFf5wW4pH9dXZ/Yo5EzmgTd5s4TeKtrwm24xKPj5/oKVuiUUebLF2bJpug==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", false, "JimBean" });
+                values: new object[,]
+                {
+                    { "00000000-aaaa-bbbb-cccc-dddddddddddd", 0, "130593e2-8b02-4f14-a7ea-e02da967fa7f", "jim@jimbean.com.com", true, "Jim", null, "Bean", false, null, "jim@jimbean.com", "jim@jimbean.com", "AQAAAAEAACcQAAAAEMfXKsuvAureA7GV/K+ReMIqk4tPGMEkqXrCjPKOLxvBSOAiF3gd8EgzJ9sda1FMEg==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", false, "JimB" },
+                    { "11111111-aaaa-bbbb-cccc-dddddddddddd", 0, "ce5bef93-1622-4ce8-a812-aa2e0eab2c1c", "jack@jackdaniels.com.com", true, "Jack", null, "Daniels", false, null, "jack@jackdaniels.com", "jack@jackdaniels.com", "AQAAAAEAACcQAAAAEEIGIspccsCnW3Mbt9z+j6RnQ3SlZemj2q6bbqE2+AcL810Ujzfs7uXud0WlFkUE/Q==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794578", false, "jackD" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Category",
@@ -269,17 +280,12 @@ namespace Marketplace.Migrations
             migrationBuilder.InsertData(
                 table: "Item",
                 columns: new[] { "ItemId", "CategoryId", "Description", "ImagePath", "ListPrice", "SellerId", "StatusId", "Title" },
-                values: new object[] { 1, 3, "1.75 liter bottle of Triple distilled Irish whiskey. Great for first time whiskey tasters.", null, 50.0, "00000000-aaaa-bbbb-cccc-dddddddddddd", 2, "Jameson Irish Whiskey" });
+                values: new object[] { 1, 1, "Classic Game with real gold and silver pieces.  1 of only 50 ever made.", null, 500.0, "00000000-aaaa-bbbb-cccc-dddddddddddd", 1, "Monopoly Gold Edition" });
 
             migrationBuilder.InsertData(
-                table: "Item",
-                columns: new[] { "ItemId", "CategoryId", "Description", "ImagePath", "ListPrice", "SellerId", "StatusId", "Title" },
-                values: new object[] { 2, 1, "The classic, fast-paced, wheelin' & dealin, property trading board game. I bought this back in 1990, now I'm passing it to you.", null, 150.0, "00000000-aaaa-bbbb-cccc-dddddddddddd", 1, "Monopoly" });
-
-            migrationBuilder.InsertData(
-                table: "Item",
-                columns: new[] { "ItemId", "CategoryId", "Description", "ImagePath", "ListPrice", "SellerId", "StatusId", "Title" },
-                values: new object[] { 3, 2, "A deluxe padded seat with adjustable backrest and adjustable foot pegs, this kayak is a great choice for touring lazy rivers or doing some exploration on smaller lakes. Must sell to make room in my garage.", null, 400.0, "00000000-aaaa-bbbb-cccc-dddddddddddd", 1, "Perception Conduit 13.0 Kayak" });
+                table: "Bid",
+                columns: new[] { "BidId", "Comment", "ItemId", "Offer", "UserId", "When" },
+                values: new object[] { 1, "I've been looking for one of these! Can we bargain?", 1, 420.0, "11111111-aaaa-bbbb-cccc-dddddddddddd", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -321,6 +327,16 @@ namespace Marketplace.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bid_ItemId",
+                table: "Bid",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bid_UserId",
+                table: "Bid",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Item_CategoryId",
                 table: "Item",
                 column: "CategoryId");
@@ -334,11 +350,6 @@ namespace Marketplace.Migrations
                 name: "IX_Item_StatusId",
                 table: "Item",
                 column: "StatusId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Messages_UserId",
-                table: "Messages",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -359,22 +370,22 @@ namespace Marketplace.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Item");
-
-            migrationBuilder.DropTable(
-                name: "Messages");
+                name: "Bid");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Item");
+
+            migrationBuilder.DropTable(
                 name: "Category");
 
             migrationBuilder.DropTable(
-                name: "Status");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Status");
         }
     }
 }
