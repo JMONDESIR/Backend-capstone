@@ -4,63 +4,71 @@
     ViewData["Title"] = "BuyerDetails";
 }
 
-    <h1>Details</h1>
+<h1>Details</h1>
 
+<div>
+    <h4>Check this Item!</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            <img class="attract-demo" src="~/images/@Model.ImagePath"
+                 asp-append-version="true" />
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Category.Label)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Seller)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Seller.FullName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ListPrice)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ListPrice)
+        </dd>
+    </dl>
     <div>
-        <h4>Check this Item!</h4>
+        <h4>Active bids</h4>
         <hr />
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Title)
-            </dt>
-            <dd class="col-sm-10">
-                <img class="attract-demo" src="~/images/@Model.ImagePath"
-                     asp-append-version="true" />
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Category)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Category.Label)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Seller)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Seller.FullName)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ListPrice)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ListPrice)
-            </dd>
-        </dl>
-        <div>
-            <h4>Active bids</h4>
-        </div>
-        @foreach (var item in Model.Bids)
-        {
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(ItemBid => item.User.UserName)
-            </dt>
-            <dd class="col-sm-2">
-                @Html.DisplayFor(ItemBid => item.User.FullName)
-            </dd>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(ItemBid => item.Comment)
-            </dd>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(ItemBid => item.Offer)
-            </dd>
-        }
     </div>
+</div>
+@foreach (var item in Model.Bids)
+{
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(ItemBid => item.Offer)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(ItemBid => item.Offer)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(ItemBid => item.User.UserName)
+    </dt>
+    <dd class="col-sm-2">
+        @Html.DisplayFor(ItemBid => item.User.UserName)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(ItemBid => item.Comment)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(ItemBid => item.Comment)
+    </dd>
+    <hr />
+}
 <div>
     <a asp-controller="Home" asp-action="Index">Back</a> |
     <a asp-controller="Bids" asp-action="Create" asp-route-id="@Model.ItemId">Place a bid</a>

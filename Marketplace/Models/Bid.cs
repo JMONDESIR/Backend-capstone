@@ -22,6 +22,8 @@ namespace Marketplace.Models
 
         [Required]
         [DisplayFormat(DataFormatString = "{0:C}")]
+
+        [Display(Name = "Bid")]
         public double Offer { get; set; }
 
         public string Comment { get; set; }
