@@ -53,7 +53,7 @@
     <dd class="col-sm-10">
         @Html.DisplayFor(ItemBid => item.Comment)
     </dd>
-    <input type="submit" value="Accept" class="btn btn-primary" />
+        <a asp-controller="Items" asp-action="Accept" value="Accept" asp-route-id="@item.ItemId" class="btn btn-primary">Accept</a>
     <hr />
 }
 <br />

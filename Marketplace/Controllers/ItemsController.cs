@@ -289,5 +289,39 @@ namespace Marketplace.Controllers
 
             return statusList;
         }
+        // GET: Items/Accept/5
+        public async Task<IActionResult> Accept(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var item = await _context.Item
+                .Include(i => i.Category)
+                .Include(i => i.Seller)
+                .Include(i => i.Status)
+                .FirstOrDefaultAsync(m => m.ItemId == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return View(item);
+        }
+
+        // POST: Items/Accept/5
+        public async Task<IActionResult> AcceptConfirmed(int id)
+        {
+            var item = await _context.Item
+                .Include(i => i.Status)
+                .Where(i => i.ItemId == id)
+                .FirstAsync();
+
+            item.StatusId = 2;
+            _context.Update(item);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(MyItems));
+        }
     }
 }
