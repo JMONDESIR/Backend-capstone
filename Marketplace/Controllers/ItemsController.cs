@@ -99,9 +99,9 @@ namespace Marketplace.Controllers
             }
 
             var item = await _context.Item
-                .Include(i => i.Category)
-                .Include(i => i.Seller)
                 .Include(i => i.Status)
+                .Include(i => i.Bids).ThenInclude(b => b.User)
+
                 .FirstOrDefaultAsync(m => m.ItemId == id);
             if (item == null)
             {
