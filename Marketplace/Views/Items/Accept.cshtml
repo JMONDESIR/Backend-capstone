@@ -1,0 +1,34 @@
+﻿@model Marketplace.Models.Item
+
+@{
+    ViewData["Title"] = "Accept";
+}
+
+<h1>Accept Bid</h1>
+
+<h3>Are you sure you want to accept this bid?</h3>
+<div>
+    <h4>Item</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ListPrice)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ListPrice)
+        </dd>
+    </dl>
+
+    <a asp-controller="Items" asp-action="AcceptConfirmed" asp-route-id="@Model.ItemId" class="btn btn-danger">Accept</a>
+</div>
+<br />
+<div>
+    <a asp-controller="Home" asp-action="Index">Home</a> |
+    <a asp-controller="Items" a asp-action="MyItems">Back</a>
+</div>

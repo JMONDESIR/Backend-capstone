@@ -11,9 +11,11 @@ using Microsoft.AspNetCore.Identity;
 using Marketplace.Models.ItemViewModels;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Marketplace.Controllers
 {
+    [Authorize]
     public class ItemsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -39,7 +41,6 @@ namespace Marketplace.Controllers
                 .Include(i => i.Status)
                 .Where(i => i.Status.ListStatus == "Active")
                 .ToList();
-
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -289,6 +290,40 @@ namespace Marketplace.Controllers
             var statusList = _context.Status.ToList();
 
             return statusList;
+        }
+        // GET: Items/Accept/5
+        public async Task<IActionResult> Accept(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var item = await _context.Item
+                .Include(i => i.Category)
+                .Include(i => i.Seller)
+                .Include(i => i.Status)
+                .FirstOrDefaultAsync(m => m.ItemId == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return View(item);
+        }
+
+        // POST: Items/Accept/5
+        public async Task<IActionResult> AcceptConfirmed(int id)
+        {
+            var item = await _context.Item
+                .Include(i => i.Status)
+                .Where(i => i.ItemId == id)
+                .FirstAsync();
+
+            item.StatusId = 2;
+            _context.Update(item);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(MyItems));
         }
     }
 }
