@@ -40,7 +40,6 @@ namespace Marketplace.Controllers
                 .Where(i => i.Status.ListStatus == "Active")
                 .ToList();
 
-
             if (!String.IsNullOrEmpty(searchString))
             {
                 items = items.Where(i => i.Category.Label.ToUpper().Contains(searchString.ToUpper())

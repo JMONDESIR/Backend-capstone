@@ -36,10 +36,13 @@ namespace Marketplace.Controllers
             {
                 ViewBag.CurrentUserName = currentUser.UserName;
             }
+
             var applicationDbContext = _context.Item
                .Include(i => i.Category)
                .Include(i => i.Seller)
-               .Take(5);
+                .Where(i => i.Status.ListStatus == "Active")
+               .Take(10);
+
             return View(await applicationDbContext.ToListAsync());
         }
 
