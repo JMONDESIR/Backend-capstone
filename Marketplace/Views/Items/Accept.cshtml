@@ -23,12 +23,6 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ListPrice)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Bids)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Bids)
-        </dd>
     </dl>
 
     <a asp-controller="Items" asp-action="AcceptConfirmed" asp-route-id="@Model.ItemId" class="btn btn-danger">Accept</a>

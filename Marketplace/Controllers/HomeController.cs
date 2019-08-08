@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Marketplace.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         //setting private reference to the I.D.F usermanager
@@ -27,8 +28,6 @@ namespace Marketplace.Controllers
             _context = context;
             _userManager = userManager;
         }
-
-        [Authorize]
         public async Task<IActionResult> Index()
         {
             var currentUser = await _userManager.GetUserAsync(User);

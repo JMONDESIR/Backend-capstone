@@ -9,9 +9,11 @@ using Marketplace.Data;
 using Marketplace.Models;
 using Microsoft.AspNetCore.Identity;
 using Marketplace.Models.ItemViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Marketplace.Controllers
 {
+    [Authorize]
     public class BidsController : Controller
     {
         private readonly ApplicationDbContext _context;

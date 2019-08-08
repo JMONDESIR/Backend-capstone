@@ -18,9 +18,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Comment)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.When)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -36,9 +33,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Comment)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.When)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.BidId">Edit my bid</a> |
