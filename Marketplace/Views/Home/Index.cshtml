@@ -9,51 +9,31 @@
 
         <h1>Home</h1>
 
-        @*<form asp-controller="Products" asp-action="Index" method="get">
+        <form asp-controller="Products" asp-action="Index" method="get">
             <input type="text" placeholder="Search For..." name="searchString" value="@ViewData["currentFilter"]" />
             <input type="submit" value="Search" class="btn btn-sm btn-primary" />
-        </form>*@
+        </form>
         <br />
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Title)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ImagePath)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Description)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ListPrice)
-                    </th>
-
-                </tr>
-            </thead>
-            <tbody>
                 @foreach (var item in Model)
         {
-                <tr>
-                    <td>
-                        <a asp-controller="Items" asp-action="BuyerDetails" asp-route-id="@item.ItemId">
-                            @Html.DisplayFor(model => item.Title)
-                        </a>
-                    </td>
-                    <td>
-                        <img class="attract-home" src="~/images/@item.ImagePath"
-                             asp-append-version="true" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ListPrice)
-                    </td>
-                </tr>
-        }
-            </tbody>
 
-        </table>
+                    @*HOME ITEM CARD*@ 
+
+                <div class="homeContainer">
+                    <div class="card bg-light" style="width: 18rem;">
+                        <img class="card-img-top" src="~/images/@item.ImagePath" alt="Card image cap" asp-append-version="true" />
+                        <div class="card-body">
+                            <h5 class="card-title" asp-controller="Items" asp-action="BuyerDetails" asp-route-id="@item.ItemId">@Html.DisplayFor(model => item.Title)</h5>
+                            <div>
+                                <strong>@Html.DisplayFor(modelItem => item.ListPrice)</strong>
+                            </div>
+                            <hr>
+                            <a asp-controller="Items" asp-action="BuyerDetails" asp-route-id="@item.ItemId" class="btn btn-primary">Details</a>
+                        </div>
+                    </div>
+                </div>
+                    @*HOME ITEM CARD*@
+
+
+        }

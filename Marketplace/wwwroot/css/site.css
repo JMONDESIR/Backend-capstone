@@ -58,11 +58,10 @@ body {
     line-height: 60px; /* Vertically center the text there */
 }
 
-.attract-home {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-    position: relative;
-    width: 200px;
-    height: auto;
+.homeContainer {
+    display: inline-grid;
+    grid-auto-rows: 450px;
+    grid-column-gap: 10px;
 }
 
 .attract-demo {
